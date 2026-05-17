@@ -1,81 +1,15 @@
 "use client";
 
-import React from "react";
 import dynamic from "next/dynamic";
 
-const Viewer =
-dynamic(
-
-()=>
-import(
-"./CesiumViewer"
-),
-
-{
-ssr:false
-}
-
+const Viewer = dynamic(
+  () => import("./CesiumViewer"),
+  {
+    ssr: false,
+    loading: () => <div>Loading Earth...</div>,
+  }
 );
 
-
-export default function
-CesiumWrapper(){
-
-const[
-CesiumJs,
-
-setCesiumJs
-
-]=React.useState<any>(
-null
-);
-
-
-React.useEffect(()=>{
-
-if(
-CesiumJs
-)return;
-
-
-import(
-"cesium"
-)
-
-.then(
-
-(Cesium)=>{
-
-setCesiumJs(
-Cesium
-);
-
-}
-
-);
-
-},[
-CesiumJs
-]);
-
-
-if(
-!CesiumJs
-){
-
-return null;
-
-}
-
-
-return(
-
-<Viewer
-CesiumJs={
-CesiumJs
-}
-/>
-
-);
-
+export default function CesiumWrapper() {
+  return <Viewer />;
 }

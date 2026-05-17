@@ -1,5 +1,6 @@
 "use client";
 
+import * as Cesium from "cesium";
 import "./cesium-setup";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 
@@ -8,9 +9,9 @@ import {
   useRef
 } from "react";
 
-export default function CesiumViewer({
-  CesiumJs
-}: any) {
+
+
+export default function CesiumViewer() {
 
   const ref =
     useRef<HTMLDivElement | null>(
@@ -28,14 +29,14 @@ export default function CesiumViewer({
     if (
       !ref.current ||
       viewerRef.current ||
-      !CesiumJs
+      !Cesium
     ) {
       return;
     }
 
 
     viewerRef.current =
-      new CesiumJs.Viewer(
+      new Cesium.Viewer(
 
         ref.current,
 
@@ -66,7 +67,7 @@ export default function CesiumViewer({
             false,
 
           terrain:
-            CesiumJs.Terrain
+            Cesium.Terrain
               .fromWorldTerrain(),
 
         }
@@ -80,8 +81,7 @@ export default function CesiumViewer({
 
         destination:
 
-          CesiumJs
-            .Cartesian3
+          Cesium.Cartesian3
             .fromDegrees(
 
               0,
