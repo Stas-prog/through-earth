@@ -1,5 +1,7 @@
-import EarthScene from "@/components/EarthScene";
+import CesiumWrapper from "@/components/cesium/CesiumWrapper";
 
-export default function Home() {
-  return <EarthScene />;
+export default function Home(){
+    return(
+      <CesiumWrapper/>
+   );
 }

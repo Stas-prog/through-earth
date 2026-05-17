@@ -15,8 +15,8 @@ export default function ThroughEarthButton({
       disabled={disabled}
       className="
         absolute
-        bottom-30
-        pointer
+        bottom-32
+        cursor-pointer
         left-1/2
         -translate-x-1/2
         z-50

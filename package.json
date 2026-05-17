@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "copy-cesium": "node scripts/copy-cesium-assets.js",
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm run copy-cesium && next dev --webpack",
+    "build": "npm run copy-cesium && next build --webpack",
     "start": "next start",
     "lint": "eslint"
   },
@@ -17,8 +17,8 @@
     "fs-extra": "^11.3.5",
     "lucide-react": "^1.14.0",
     "next": "16.2.6",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "resium": "^1.21.0",
     "three": "^0.184.0"
   },
