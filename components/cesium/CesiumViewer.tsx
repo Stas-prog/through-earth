@@ -10,7 +10,6 @@ import {
 } from "react";
 
 
-
 export default function CesiumViewer() {
 
   const ref =
@@ -19,78 +18,144 @@ export default function CesiumViewer() {
     );
 
   const viewerRef =
-    useRef<any>(
+    useRef<Cesium.Viewer | null>(
       null
     );
 
 
   useEffect(() => {
 
+    console.log(
+      "TOKEN:",
+      process.env
+        .NEXT_PUBLIC_CESIUM_TOKEN
+    );
+
+
     if (
       !ref.current ||
-      viewerRef.current ||
-      !Cesium
+      viewerRef.current
     ) {
       return;
     }
 
 
-    viewerRef.current =
-      new Cesium.Viewer(
+    async function init() {
 
-        ref.current,
+      try {
 
-        {
-
-          timeline:
-            false,
-
-          animation:
-            false,
-
-          baseLayerPicker:
-            false,
-
-          geocoder:
-            false,
-
-          fullscreenButton:
-            false,
-
-          homeButton:
-            false,
-
-          sceneModePicker:
-            false,
-
-          navigationHelpButton:
-            false,
-
-          terrain:
-            Cesium.Terrain
-              .fromWorldTerrain(),
-
-        }
-
-      );
+        Cesium.Ion.defaultAccessToken =
+          process.env
+            .NEXT_PUBLIC_CESIUM_TOKEN!;
 
 
-    viewerRef.current
-      .camera
-      .flyTo({
+        console.log(
+          "ION TOKEN:",
+          Cesium.Ion.defaultAccessToken
+        );
 
-        destination:
 
-          Cesium.Cartesian3
-            .fromDegrees(
+        console.log(
+          "TOKEN MATCH:",
+          Cesium.Ion.defaultAccessToken ===
+          process.env
+            .NEXT_PUBLIC_CESIUM_TOKEN
+        );
 
-              0,
-              30,
-              20000000
 
-            ),
+        const terrainProvider =
 
-      });
+          await Cesium
+            .createWorldTerrainAsync();
+
+
+        console.log(
+          "TERRAIN:",
+          terrainProvider
+        );
+
+
+        viewerRef.current =
+
+          new Cesium.Viewer(
+
+            ref.current!,
+
+            {
+
+              timeline:
+                false,
+
+              animation:
+                false,
+
+              baseLayerPicker:
+                false,
+
+              geocoder:
+                false,
+
+              fullscreenButton:
+                false,
+
+              homeButton:
+                false,
+
+              sceneModePicker:
+                false,
+
+              navigationHelpButton:
+                false,
+
+
+              terrainProvider:
+                terrainProvider,
+
+            }
+
+          );
+
+
+        console.log(
+          "VIEWER OK"
+        );
+
+
+        viewerRef.current
+          .camera
+          .flyTo({
+
+            destination:
+
+              Cesium.Cartesian3
+                .fromDegrees(
+
+                  0,
+                  30,
+                  20000000
+
+                ),
+
+          });
+
+      }
+
+      catch (e) {
+
+        console.error(
+
+          "CESIUM FAIL:",
+
+          e
+
+        );
+
+      }
+
+    }
+
+
+    init();
 
 
     return () => {
@@ -105,6 +170,7 @@ export default function CesiumViewer() {
     };
 
   }, []);
+
 
 
   return (
@@ -135,6 +201,7 @@ export default function CesiumViewer() {
         CESIUM LIVE
 
       </div>
+
 
 
       <div

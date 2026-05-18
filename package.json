@@ -10,11 +10,11 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "cesium": "^1.140.0",
+    "cesium": "^1.137.0",
     "framer-motion": "^12.38.0",
     "fs-extra": "^11.3.5",
     "lucide-react": "^1.14.0",
-    "next": "16.2.6",
+    "next": "^16.1.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "resium": "^1.21.0"
